@@ -54,10 +54,17 @@ export default function MainContainer() {
                 //     style: {padding:10, height: 70}
                 // }}
                 >
+
                 
+                
+                {/* <Tab.Screen name = {homeName} component = {HomeScreen} />
+                <Tab.Screen name = {cameraName} component = {CameraScreen} />
+                <Tab.Screen name = {settingsName} component = {SettingsScreen} />  */}
+
+
                 <Tab.Screen name = {homeName} component = {HomeScreen} />
                 <Tab.Screen name = {cameraName} component = {CameraScreen} />
-                <Tab.Screen name = {settingsName} component = {SettingsScreen} />
+                <Tab.Screen name = {settingsName} component = {SettingsScreen} /> 
 
             </Tab.Navigator>
         </NavigationContainer>

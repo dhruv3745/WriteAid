@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/WriteRightLogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#808080"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,8 +22,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/WriteRightLogo.png",
+        "backgroundColor": "#808080"
       }
     },
     "web": {
