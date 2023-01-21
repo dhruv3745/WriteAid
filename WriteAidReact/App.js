@@ -6,5 +6,4 @@ function App() {
     <MainContainer/>
   );
 }
-
 export default App;
