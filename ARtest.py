@@ -1,11 +1,12 @@
 import cv2
 import numpy as np
-
 vid = cv2.VideoCapture(0)
+src_img = cv2.imread("painting.jpg")
 while(True):
     ret, frame = vid.read()
+    framecopy = frame.copy()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (3,3), 0)
+    blur = cv2.GaussianBlur(gray, (3, 3), 0)
     otsu = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
     kernel = np.ones((7,7), np.uint8)
     morph = cv2.morphologyEx(otsu, cv2.MORPH_CLOSE, kernel)
@@ -28,9 +29,21 @@ while(True):
     corners = cv2.approxPolyDP(contours[i], 0.04 * segment, True)
     polygon = frame.copy()
     cv2.polylines(polygon, [corners], True, (0,0,255), 1, cv2.LINE_AA)
+    pts_src = np.array([[0, 0], [src_img.shape[1] - 1, 0], [src_img.shape[1] - 1, src_img.shape[0] - 1], [0, src_img.shape[0] - 1]])
+    result = frame
+    if (len(corners)) == 4:
+
+        pts_dst = corners
+
+        mat, status = cv2.findHomography(pts_src, pts_dst)
+        warp = cv2.warpPerspective(src_img, mat, (frame.shape[1], frame.shape[0]))
+        cv2.fillConvexPoly(framecopy, pts_dst, 0, 16)
+
+        result = framecopy + warp
+
 
     cv2.imshow('frame',polygon)
-    print(corners)
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
