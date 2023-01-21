@@ -10,12 +10,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import CameraScreen from './screens/CameraScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import UploadImageScreen from './screens/UploadImageScreen';
 
 //Screen names
 
 const homeName = 'Home';
 const cameraName = 'Camera';
 const settingsName = 'Settings';
+// const uploadImageName = 'UploadImage';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,6 +67,7 @@ export default function MainContainer() {
                 <Tab.Screen name = {homeName} component = {HomeScreen} />
                 <Tab.Screen name = {cameraName} component = {CameraScreen} />
                 <Tab.Screen name = {settingsName} component = {SettingsScreen} /> 
+                {/* <Tab.Screen name = {uploadImageName} component = {UploadImageScreen} />  */}
 
             </Tab.Navigator>
         </NavigationContainer>

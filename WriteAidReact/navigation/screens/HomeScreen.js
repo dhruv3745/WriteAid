@@ -2,6 +2,8 @@ import { useState } from 'react';
 import * as React from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity, Modal, Dimensions, StyleSheet} from 'react-native';
 //import {WhatTypeStencil} from '../Components/WhatTypeStencil';
+
+import UploadImageScreen from './UploadImageScreen';
  
 
 export default function HomeScreen({navigation}) {
@@ -12,7 +14,13 @@ export default function HomeScreen({navigation}) {
     setIsModalVisible(bool);
   }
 
-const WhatTypeStencil = () => {
+  
+
+const WhatTypeStencil = (props) => {
+
+  closeModal = (bool) => {
+    props.ChangeModalVisible(bool);
+  }
 
     return(
         <TouchableOpacity
@@ -22,17 +30,20 @@ const WhatTypeStencil = () => {
         <View style={styles.modal}>
             <View style={styles.textView}>
                 <Text style={[styles.text, {fontSize:20}]}> Stencil Type </Text>
-                <Text style={[styles.text, {fontWeight:'normal'}]}> How do you want to create a stencil?</Text>
+                <Text style={[styles.text, {fontWeight:'normal', paddingTop: 20}]}> How do you want to create a stencil?</Text>
             </View>
 
             <View style={styles.buttonsView}>
               <TouchableOpacity style={ styles.touchableOpacity}
+              onPress={() => [closeModal(false), navigation.navigate('UploadImage')]}
               >
                 <Text style={ [styles.text, {color: 'blue'}]}>
                   Upload Image
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={ styles.touchableOpacity}
+              <TouchableOpacity 
+              style={ styles.touchableOpacity}
+              onPress={() => closeModal(false)}
               >
                 <Text style={ [styles.text, {color: 'blue'}]}>
                   Enter Text/Speak
@@ -64,7 +75,9 @@ const WhatTypeStencil = () => {
         visible={isModalVisible}
         nRequestClose={() => ChangeModalVisible(false)}
       >
-        <WhatTypeStencil/>
+        <WhatTypeStencil
+          ChangeModalVisible={ChangeModalVisible}
+        />
 
       </Modal>
 
