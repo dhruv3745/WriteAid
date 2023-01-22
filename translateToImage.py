@@ -5,8 +5,9 @@ import numpy as np
 
 text1 = "この文は現在翻訳中です"
 
-def translateToImage(text, filename):
+def translateToImage(filename):
 
+    text = input("Enter text: ")
     translator = googletrans.Translator()
     textIn = translator.translate(text, dest="en").text
 
@@ -65,4 +66,4 @@ def translateToImage(text, filename):
     cv2.waitKey(0)
 
 
-translateToImage(text1, "resultImage.jpg")
+translateToImage("resultImage.jpg")
