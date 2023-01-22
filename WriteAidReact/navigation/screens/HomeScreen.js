@@ -2,8 +2,6 @@ import { useState } from 'react';
 import * as React from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity, Modal, Dimensions, StyleSheet} from 'react-native';
 //import {WhatTypeStencil} from '../Components/WhatTypeStencil';
-
-import UploadImageScreen from './UploadImageScreen';
  
 
 export default function HomeScreen({navigation}) {
@@ -43,7 +41,7 @@ const WhatTypeStencil = (props) => {
               </TouchableOpacity>
               <TouchableOpacity 
               style={ styles.touchableOpacity}
-              onPress={() => closeModal(false)}
+              onPress={() => [closeModal(false), navigation.navigate('TextToStencil')]}
               >
                 <Text style={ [styles.text, {color: 'blue'}]}>
                   Enter Text/Speak

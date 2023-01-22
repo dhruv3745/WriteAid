@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator }  from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -11,15 +12,38 @@ import HomeScreen from './screens/HomeScreen';
 import CameraScreen from './screens/CameraScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import UploadImageScreen from './screens/UploadImageScreen';
+import TextToStencil from './screens/TextToStencil';
 
 //Screen names
 
 const homeName = 'Home';
 const cameraName = 'Camera';
 const settingsName = 'Settings';
-// const uploadImageName = 'UploadImage';
+const uploadImageName = 'UploadImage';
+const textToStencilName = 'TextToStencil';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+
+function HomeScreenStencils() {
+    return (
+        <Stack.Navigator screenOptions={{
+            headerShown: false
+          }}>
+        <Stack.Screen name = {'ogHome'} component = {HomeScreen}/>
+        <Stack.Screen
+      name={uploadImageName}
+      component={UploadImageScreen}
+        />
+        <Stack.Screen
+      name={textToStencilName}
+      component={TextToStencil}
+        />
+    </Stack.Navigator>
+    );
+  }
+  
 
 
 export default function MainContainer() {
@@ -64,12 +88,13 @@ export default function MainContainer() {
                 <Tab.Screen name = {settingsName} component = {SettingsScreen} />  */}
 
 
-                <Tab.Screen name = {homeName} component = {HomeScreen} />
+                <Tab.Screen name = {homeName} component = {HomeScreenStencils} />
                 <Tab.Screen name = {cameraName} component = {CameraScreen} />
                 <Tab.Screen name = {settingsName} component = {SettingsScreen} /> 
                 {/* <Tab.Screen name = {uploadImageName} component = {UploadImageScreen} />  */}
 
             </Tab.Navigator>
+
         </NavigationContainer>
     );
 }

@@ -1,12 +1,23 @@
 import { useRef, useState, useEffect } from 'react';
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {Overlay} from 'react-native';
 import { Camera } from 'expo-camera';
+import Draggable from 'react-native-draggable';
 
 export default function CameraScreen({navigation}) {
     let cameraRef = useRef();
     const [hasCameraPermission, setHasCameraPermission] = useState();
     const [hasMicPermission, setHasMicPermission] = useState();
+
+    let circleTLX = Dimensions.get('window').width/2-75;
+    let circleTLY = Dimensions.get('window').height/2-75;
+    let circleTRX = Dimensions.get('window').width/2+75;
+    let circleTRY = Dimensions.get('window').height/2-75;
+    let circleBRX = Dimensions.get('window').width/2+75;
+    let circleBRY = Dimensions.get('window').height/2+75;
+    let circleBLX = Dimensions.get('window').width/2-75;
+    let circleBLY = Dimensions.get('window').height/2+75;
 
     useEffect(() => {
         (async () => {
@@ -17,6 +28,31 @@ export default function CameraScreen({navigation}) {
         })();
     }, []);
 
+    const sendLocationsofRectangle = (cornerNumber, xval, yval) => { 
+
+        switch (cornerNumber) {
+            case 1:
+              circleTLX = xval;
+              circleTLY = yval
+              break;
+            case 2:
+                circleTRX = xval;
+                circleTRY = yval
+              break;
+            case 3:
+                circleBRX = xval;
+                circleBRY = yval
+              break;
+            case 4:
+                circleBLX = xval;
+                circleBLY = yval
+              break;
+          }
+
+          console.log(circleTLX, circleTLY, circleTRX, circleTRY, circleBRX, circleBRY, circleBLX, circleBLY);
+          
+    }
+
     if (hasCameraPermission===undefined) {
         return /*<Text>Requesting Camera Permissions....</Text>*/
     } else if (!hasCameraPermission) {
@@ -24,7 +60,20 @@ export default function CameraScreen({navigation}) {
     }
 
     return (
-        <Camera style={styles.container} ref={cameraRef}>
+        <Camera style={styles.camera} ref={cameraRef}>
+        
+
+        <View opacity = {.7}>
+        {/* <Draggable x={75} y={100} renderSize={56} renderColor='white' renderText='A' isCircle shouldReverse onShortPressRelease={()=>alert('touched!!')}/>  */}
+        {/* <Draggable x={200} y={300} renderColor='red' renderText='B'/> */}
+        {/* <Draggable/> */}
+        
+        <Draggable x={-75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(1 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(2 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={75} y={75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(3 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={-75} y={75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(4 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+    </View>
+
 
         </Camera>
     ) ;
@@ -39,7 +88,7 @@ export default function CameraScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    camera: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
