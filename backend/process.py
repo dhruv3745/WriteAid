@@ -186,7 +186,6 @@ def process_frame(input_path, coordinates, stencil_path):
 
             # Performs the translucent overlay
             result = cv2.addWeighted(framecopy, 1 - alpha, warp, alpha, 0)
-
-
+            cv2.imwrite("processed.jpg", result)
 
 
