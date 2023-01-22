@@ -110,7 +110,7 @@ export default function CameraScreen({navigation}) {
         <View> 
         <View style = {{}}>
 
-                <Image source={require('./WriteRightLogo.png')} style = {{width:'100%', height:"100%"}} />
+                <Image source={require('./0.jpg')} style = {{width:'100%', height:"100%"}} />
 
         {/* </View> */}
    
