@@ -1,8 +1,10 @@
 import cv2
+import numpy as np
 
 textIn = "Hello how are you doing today"
 textIn2 = "Hello how are you doing today. This is a new sentence to test if it wraps or not"
-img = cv2.imread('whiteScreen.jpg', cv2.IMREAD_UNCHANGED)
+img = np.ones((296, 607, 3), dtype = np.uint8)
+img = 255*img
 
 charList = []
 for character in textIn:
@@ -53,3 +55,4 @@ else:
 cv2.imshow("Image",img)
 cv2.imwrite("resultImage.jpg", img)
 cv2.waitKey(0)
+
