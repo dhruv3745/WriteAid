@@ -66,37 +66,37 @@ export default function CameraScreen({navigation}) {
         return <Text>Camera Permissions Not Granted. Please change permissions in Settings to proceed. </Text>
     }
 
-    let integ = 0;
+    // let integ = 0;
 
-    async function check() {
+    // async function check() {
 
         
         
-        console.log(integ++);
-        // setTimeout(check, 600);
-      }
+    //     console.log(integ++);
+    //     // setTimeout(check, 600);
+    //   }
       
       // Write this line
 
-      const callFunction = true;
+    //   const callFunction = true;
       
 
-      const checkCalls = () => {
-        setInterval(check,1000);
-      }
+    //   const checkCalls = () => {
+    //     setInterval(check,1000);
+    //   }
 
       //checkCalls();
 
-      clearInterval(check);
+    //   clearInterval(check);
 
 
 
 
-   // return (
-        // <Camera style={styles.camera} ref={cameraRef}>
+   return (
+     <Camera style={styles.camera} ref={cameraRef}>
 
         
-        {/* // <View opacity = {.7}> */}
+        <View opacity = {.7}>
         {/* <Draggable x={75} y={100} renderSize={56} renderColor='white' renderText='A' isCircle shouldReverse onShortPressRelease={()=>alert('touched!!')}/>  */}
         {/* <Draggable x={200} y={300} renderColor='red' renderText='B'/> */}
         {/* <Draggable/> */}
@@ -106,27 +106,27 @@ export default function CameraScreen({navigation}) {
       {/* {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />} */}
     {/* </View> */}
 
-    return(
-        <View> 
+    {/* return( */}
+        {/* <View> 
         <View style = {{}}>
 
-                <Image source={require('./0.jpg')} style = {{width:'100%', height:"100%"}} />
+                <Image source={require('./0.jpg')} style = {{width:'100%', height:"100%"}} /> */}
 
         {/* </View> */}
    
 
     {/* <View style={{backgroundColor:'blue', borderColor: 'black', borderWidth:1, padding:10, margin:10, height:100}}>
-        <Image source={{uri: IMAGETHING}} />
-      </View> */}
-       <Draggable x={Dimensions.get('window').width/2-75} y={Dimensions.get('window').height/2-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(1 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
-        <Draggable x={Dimensions.get('window').width/2+75} y={Dimensions.get('window').height/2-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(2 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
-        <Draggable x={Dimensions.get('window').width/2+75} y={Dimensions.get('window').height/2+75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(3 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
-        <Draggable x={Dimensions.get('window').width/2-75} y={Dimensions.get('window').height/2+75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(4 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/> 
-    </View>
+        <Image source={{uri: IMAGETHING}} />*/}
+      {/* <View>  */}
+       <Draggable x={-75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(1 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(2 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={75} y={75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(3 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
+        <Draggable x={-75} y={75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(4 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/> 
+      {/* </View>  */}
     </View>
 
 
-        /* // </Camera> */
+         </Camera>
     ) ;
 
     // return(
