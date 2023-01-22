@@ -11,11 +11,22 @@ function App() {
    //const interval =  setInterval(() => {fetchData();},33);
     //return () => clearInterval(interval);
   //});
+  const object = { "img_path": 'James Gordon' ,
+  "coord_tuple": '[(9,9),(3,5),(3,1),(3,2)]' ,
+  "stencil_path": 'bird.png'
+};
 
   useEffect(() => {
+    fetch("http://127.0.0.1:5000/process_frame", {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.text()).then(data => {console.log(data)});
     const interval = setInterval(() => {
       fetch("http://127.0.0.1:5000/video").then(response => response.text()).then(data => {console.log(data);});
-    }, 33);
+    }, 66);
       return () => clearInterval(interval);
   }, []);
 
@@ -24,7 +35,7 @@ function App() {
 
   // Similar to componentDidMount and componentDidUpdate:
   //useEffect(() => {
-    // Update the document title using the browser API
+    
   //});
   
   return(
