@@ -78,13 +78,7 @@ const WhatTypeStencil = (props) => {
         />
 
       </Modal>
-      <View>
-        <Image
-          style={styles.tinyLogo}
-          source={{ uri: "url_for('video')"}}
-        />
-        {/* add image here */}
-      </View>
+      
 
     </SafeAreaView>
   );
