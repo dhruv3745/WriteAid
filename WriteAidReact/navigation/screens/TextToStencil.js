@@ -3,6 +3,8 @@ import {View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity, Touch
 
 export default function TextToStencil({navigation}) {
 
+
+
     
     const [value, onChangeText] = React.useState('');
 

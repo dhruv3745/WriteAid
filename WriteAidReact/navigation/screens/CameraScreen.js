@@ -26,6 +26,7 @@ export default function CameraScreen({navigation}) {
     const [imageUri, setImageUri] = useState(null);
     useEffect(() => {
         (async () => {
+            
             const cameraPermission = await Camera.requestCameraPermissionsAsync();
             const micPermission = await Camera.requestMicrophonePermissionsAsync();
             setHasCameraPermission(cameraPermission.status === "granted");
