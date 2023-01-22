@@ -11,7 +11,7 @@ export default function TextToStencil({navigation}) {
     const buttonPressed = () => {
         //Add React Code to the button so that the value is sent to the 
         console.log(value);
-        fetch("http://127.0.0.1:5000/process_frame", {
+        fetch("http://127.0.0.1:5000/upload_text", {
       method: 'POST',
       body: JSON.stringify({value}),
       headers: {
