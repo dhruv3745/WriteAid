@@ -113,12 +113,12 @@ def track_coords(gray, coords, prev_coords, prev_gray):
     #     coords = coords[status==1]
     #     coords = coords.astype(np.float64)
 
-def process_frame(input_path, coordinates, stencil_path):
-
+def complete_stencil(input_path, coordinates, stencil_path):
+    coordinates = np.array(coordinates, dtype=np.float32).reshape(4,1,2)
     # Sample stencil
-    src_img = cv2.imread("stencil_path")
-    frame = cv2.imread("input_path")
-
+    stencil = cv2.imread(stencil_path)
+    frame = cv2.imread(input_path)
+    src_img = np.ones((512, 512, 3), dtype=np.uint8) * 255
 
     framecopy = frame.copy()
     polygon = frame.copy()
@@ -165,6 +165,7 @@ def process_frame(input_path, coordinates, stencil_path):
         polygon = frame.copy()
         cv2.polylines(polygon, [corners], True, (0,0,255), 1, cv2.LINE_AA)
         pts_src = np.array([[0, 0], [src_img.shape[1] - 1, 0], [src_img.shape[1] - 1, src_img.shape[0] - 1], [0, src_img.shape[0] - 1]])
+        pts_sten = np.array([[0, 0], [stencil.shape[1] - 1, 0], [stencil.shape[1] - 1, stencil.shape[0] - 1], [0, stencil.shape[0] - 1]])
 
         # Displays the stencil if the contour is a quadrilateral
         if (len(corners)) == 4:
@@ -177,15 +178,89 @@ def process_frame(input_path, coordinates, stencil_path):
             # Find homography (perspective conversion) matrix
             mat, status = cv2.findHomography(pts_src, pts_dst)
             # Converts perspective
+            rmat, status = cv2.findHomography(pts_dst, pts_src)
+            warped_points = cv2.perspectiveTransform(coordinates.reshape(-1, 1, 2), rmat)
+            stenmat, status = cv2.findHomography(warped_points, pts_sten)
+            stenwarp = cv2.warpPerspective(stencil, stenmat, (src_img.shape[1], src_img.shape[0]))
+            src_img += stenwarp
             warp = cv2.warpPerspective(src_img, mat, (frame.shape[1], frame.shape[0]))
-
             # Overlay the stencil
-            result = framecopy + warp
+            # result = framecopy + warp
             # Translucency
             alpha = 0.3
 
             # Performs the translucent overlay
             result = cv2.addWeighted(framecopy, 1 - alpha, warp, alpha, 0)
             cv2.imwrite("processed.jpg", result)
+            cv2.imwrite("complete_sten.jpg", src_img)
+
+def process_frame(input_path, sten_path):
+    # Sample stencil
+    stencil = cv2.imread(sten_path)
+    frame = cv2.imread(input_path)
+
+    framecopy = frame.copy()
+    polygon = frame.copy()
+    page = frame.copy()
+    bg = removefg(frame)
+    result = frame
+    # Grayscale
+    gray = cv2.cvtColor(bg, cv2.COLOR_BGR2GRAY)
+    # Gaussian blur
+    blur = cv2.GaussianBlur(gray, (3, 3), 0)
+    blur = cv2.bitwise_not(blur)
+    # Threshold
+    #thresh = cv2.adaptiveThreshold(blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+    #thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
+    otsu = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    k = np.ones((3,3), np.uint8)
+    # Apply the darkening kernel to the non-white pixels
+    erode = cv2.erode(thresh, k, iterations = 1)
+    # Apply morphology
+    kernel = np.ones((7,7), np.uint8)
+    morph = cv2.morphologyEx(otsu, cv2.MORPH_CLOSE, kernel)
+    morph = cv2.morphologyEx(erode, cv2.MORPH_CLOSE, kernel)
+    morph = cv2.morphologyEx(morph, cv2.MORPH_OPEN, kernel)
+    morph = cv2.bitwise_not(morph)
+    contours = cv2.findContours(morph, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Determine optimal contour
+
+    contours = contours[0]
+    contour = find_largest_rectangle(contours)
+
+    if (contour is not None):
+            # Find corners
+        cv2.drawContours(frame, [contour], 0, (255,255,255), -1)
+        page = np.zeros_like(frame)
+        cv2.drawContours(morph, contours, 0, (255,255,255), -1)
+
+        segment = cv2.arcLength(contour, True)
+        corners = cv2.approxPolyDP(contour, 0.04 * segment, True)
+        prev_corners = corners.copy()
+        corners = findrect(corners)
 
 
+        polygon = frame.copy()
+        cv2.polylines(polygon, [corners], True, (0,0,255), 1, cv2.LINE_AA)
+        pts_src = np.array([[0, 0], [stencil.shape[1] - 1, 0], [stencil.shape[1] - 1, stencil.shape[0] - 1], [0, stencil.shape[0] - 1]])
+        # Displays the stencil if the contour is a quadrilateral
+        if (len(corners)) == 4:
+            # Sort points
+
+            if(rcorners is not None):
+                pts_dst = sort(rcorners.reshape(-1, 2)).reshape(4, 1, 2)
+            else:
+                pts_dst = sort(corners.reshape(-1, 2)).reshape(4, 1, 2)
+            # Find homography (perspective conversion) matrix
+            mat, status = cv2.findHomography(pts_src, pts_dst)
+
+            warp = cv2.warpPerspective(stencil, mat, (frame.shape[1], frame.shape[0]))
+            # Overlay the stencil
+            # result = framecopy + warp
+            # Translucency
+            alpha = 0.3
+
+            # Performs the translucent overlay
+            result = cv2.addWeighted(framecopy, 1 - alpha, warp, alpha, 0)
+            cv2.imwrite("processed.jpg", result)
