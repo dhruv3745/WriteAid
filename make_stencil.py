@@ -45,5 +45,5 @@ def img2sketch(photo, k_size):
 
     
 #Function call
-image_path = '/Users/paxysnowman/Desktop/eq.png' #REPLACE 
+image_path = 'original.png'
 img2sketch(photo= image_path, k_size=7)
