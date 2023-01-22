@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import * as React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {Overlay} from 'react-native';
 import { Camera } from 'expo-camera';
 import Draggable from 'react-native-draggable';
@@ -27,6 +27,8 @@ export default function CameraScreen({navigation}) {
             setHasMicPermission(micPermission.status === "granted");
         })();
     }, []);
+
+    
 
     const sendLocationsofRectangle = (cornerNumber, xval, yval) => { 
 
@@ -59,8 +61,43 @@ export default function CameraScreen({navigation}) {
         return <Text>Camera Permissions Not Granted. Please change permissions in Settings to proceed. </Text>
     }
 
+    let integ = 0;
+
+    async function check() {
+
+        
+        
+        console.log(integ++);
+        // setTimeout(check, 600);
+      }
+      
+      // Write this line
+
+      const callFunction = true;
+      
+
+      const checkCalls = () => {
+        setInterval(check,1000);
+      }
+
+      checkCalls();
+
+      clearInterval(check);
+
+      const [imageUri, setImageUri] = useState(null);
+
+  // Function to fetch the image from the file location
+  const fetchImage = async () => {
+    const response =  fetch('WriteRightLogo.png');
+    const blob =  response.blob();
+    const imageUri = URL.createObjectURL(blob);
+    setImageUri(imageUri);
+  };
+
     return (
-        <Camera style={styles.camera} ref={cameraRef}>
+        // <Camera style={styles.camera} ref={cameraRef}>
+
+        
         
 
         <View opacity = {.7}>
@@ -68,6 +105,11 @@ export default function CameraScreen({navigation}) {
         {/* <Draggable x={200} y={300} renderColor='red' renderText='B'/> */}
         {/* <Draggable/> */}
         
+        <View>
+      <Button title="Fetch Image" onPress={fetchImage} />
+      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
+    </View>
+
         <Draggable x={-75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(1 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
         <Draggable x={75} y={-75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(2 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
         <Draggable x={75} y={75} touchableOpacityProps={0.2} renderSize={30} renderColor='orange' renderText='+' isCircle onDragRelease={(e) => sendLocationsofRectangle(3 ,e.nativeEvent.pageX - e.nativeEvent.locationX, e.nativeEvent.pageY - e.nativeEvent.locationY)}/>
@@ -75,7 +117,7 @@ export default function CameraScreen({navigation}) {
     </View>
 
 
-        </Camera>
+        // </Camera>
     ) ;
 
     // return(
