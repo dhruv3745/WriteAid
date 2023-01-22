@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, Modal, Dimensions, StyleSheet} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Modal, Dimensions, StyleSheet, Image} from 'react-native';
 //import {WhatTypeStencil} from '../Components/WhatTypeStencil';
 
 import UploadImageScreen from './UploadImageScreen';
@@ -80,6 +80,13 @@ const WhatTypeStencil = (props) => {
         />
 
       </Modal>
+      <View>
+        <Image
+          style={styles.tinyLogo}
+          source={{ uri: "url_for('video')"}}
+        />
+        {/* add image here */}
+      </View>
 
     </SafeAreaView>
   );
@@ -117,3 +124,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 })
+
