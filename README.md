@@ -21,6 +21,8 @@ We used React Native to display the App. We had 3 Main Screens: Home, Camera, an
 We used a Flask Server with python code to create a backend processing for the images and texts. 
 
 ## AR Technologies
+We utilized a variety of opencv filters as well as a script to locate corners.
+
 
 ## Dependencies
 Googletrans - 'pip install googletrans==4.0.0rc1'
