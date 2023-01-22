@@ -1,6 +1,7 @@
 import subprocess
 import sys
 #from ARtest import findrect
+from make_stencil import img2sketch
 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
@@ -20,6 +21,7 @@ import numpy as np
 import base64
 import time
 import os
+
 
 os.path.expanduser("~")
 print(os.getcwd())
@@ -70,6 +72,13 @@ def call_process_frame():
     #print(coord_tuple, file=sys.stderr)
     #print(stencil_path, file=sys.stderr)
     return {"efe": img_path + coord_tuple + stencil_path}
+    
+    #process.process_frame(img_path, coord_tuple, stencil_path)
+
+@app.route('/image_to_stencil', methods = ["POST"] )
+def makestn():
+    img2sketch("original.png", 7)
+    return {"efe": "Fefieje"}
     
     #process.process_frame(img_path, coord_tuple, stencil_path)
 

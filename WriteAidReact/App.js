@@ -17,7 +17,7 @@ function App() {
 };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/process_frame", {
+    fetch("http://127.0.0.1:5000/image_to_stencil", {
       method: 'POST',
       body: JSON.stringify(object),
       headers: {
