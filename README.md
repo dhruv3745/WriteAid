@@ -29,3 +29,4 @@ Googletrans - 'pip install googletrans==4.0.0rc1'
 
 Opencv - 'pip install opencv-python'
 
+https://www.youtube.com/watch?v=5MU0R5uiVro
