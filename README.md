@@ -4,6 +4,8 @@ adjust the placement of the stensil. The user can follow along, learning how to 
 english and made into a stensil. Users can also upload their own images to be used as stensils. This app can be used to teach people how to write in english or draw!
 
 
+https://www.youtube.com/watch?v=5MU0R5uiVro
+
 ![Screenshot](WriteRightLogo.png)
 
 
@@ -29,4 +31,3 @@ Googletrans - 'pip install googletrans==4.0.0rc1'
 
 Opencv - 'pip install opencv-python'
 
-https://www.youtube.com/watch?v=5MU0R5uiVro
