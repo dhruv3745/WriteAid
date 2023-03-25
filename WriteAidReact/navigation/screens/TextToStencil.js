@@ -11,13 +11,13 @@ export default function TextToStencil({navigation}) {
     const buttonPressed = () => {
         //Add React Code to the button so that the value is sent to the 
         console.log(value);
-        fetch("http://127.0.0.1:5000/process_frame", {
-      method: 'POST',
-      body: JSON.stringify({value}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.text()).then(data => {console.log(data)});
+    //     fetch("http://127.0.0.1:5000/process_frame", {
+    //   method: 'POST',
+    //   body: JSON.stringify({value}),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }).then(response => response.text()).then(data => {console.log(data)});
 
         navigation.navigate('Camera');
 
