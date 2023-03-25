@@ -6,7 +6,7 @@ import numpy as np
 
 def img2sketch(photo, k_size):
     #Read Image
-    img=cv2.imread(photo)
+    img=cv2.imread('original.png')
     
     # Convert to Grey Image
     grey_img=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

@@ -1,12 +1,13 @@
 import subprocess
 import sys
 #from ARtest import findrect
-from make_stencil import img2sketch
+
 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
     
 install("Flask")
+install("googletrans")
 install("pybase64")
 install("opencv-python")
 install("flask-cors")
@@ -27,6 +28,15 @@ os.path.expanduser("~")
 print(os.getcwd())
 vid = cv2.VideoCapture(0)
 
+
+import sys
+ 
+# setting path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ 
+# importing
+from make_stencil import img2sketch
+from translateToImage import translateToImage
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -81,6 +91,13 @@ def makestn():
     return {"efe": "Fefieje"}
     
     #process.process_frame(img_path, coord_tuple, stencil_path)
+@app.route('/upload_text', methods = ["POST"] )
+def text():
+    data = request.get_json()
+    translateToImage("sketch.png", data)
+    
+    
+    return {"efe": "Fefieje"}
 
 if __name__ == "__main__":
     get_n()
